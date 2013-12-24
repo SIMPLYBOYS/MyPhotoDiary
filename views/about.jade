@@ -6,11 +6,26 @@ block append content
   br
   br
   .container
-    .jumbotron
       br
-      br
-      h1 Hello, Indonesia!
-      p This is a Hank to create a simple page to introduce.
-      p
-        a.btn.btn-primary.btn-lg Learn more
+      div
+        .row
+          .col-md-1.col-xs-12
+            img.img-responsive(src='img/download.png', width='50',style='float: left;')
+          .col-md-11.col-md-offset-1
+            h4 Download the source code
+            p
+              | The source code for this application is available in 
+              a(href='https://github.com/SIMPLYBOYS/MyPhotoDiary') this repository 
+              | on GitHub. 
+        .row
+          br 
+          .col-md-1.col-xs-12
+            img.about-icon(src='img/discuss.png', width='50', style='float: left;')
+          .col-md-11.col-md-offset-1
+            h4 Comments and questions
+            p
+              | I love to hear your feedback. Post your questions and comments on the blog post associated with this
+              | application.
+
+    
 

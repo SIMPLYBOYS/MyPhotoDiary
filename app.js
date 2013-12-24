@@ -34,6 +34,12 @@ app.get('/users', user.list);
 app.get('/about', function(req, res){
   res.render('about.jade', {title: 'About'});
 });
+app.get('/demo', function(req, res){
+  res.render('demo.jade', {title: 'PhotoDiary Demom'})
+});
+app.get('/contact', function(req, res){
+  res.render('hello.jade', {title: 'Contact Us'});
+});
 app.get('/images', function(req, res){
   console.log('images info get request!\n');
   res.end();
@@ -45,7 +51,8 @@ app.post('/images', function(req, res){
   var base64Data = req.body.image,
         fileName = req.body.fileName + '.png',
          tmpPath = req.body.path + '/' + fileName,
-      targetPath = './uploads/' + fileName,
+      targetPath = './public/uploads/' + fileName,
+         message = '',
       binaryData = new Buffer(base64Data, 'base64').toString('binary');
   console.log('--------------\n\n');
   //console.log(tmpPath);
