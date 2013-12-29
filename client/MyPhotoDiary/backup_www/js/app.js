@@ -4,6 +4,7 @@
      serverURL = 'http://' + serverIP,
      captureImage,
      retries = 0,
+     formdata = false,
      message;
 
     function onDeviceReady(){
@@ -17,6 +18,7 @@
     	document.addEventListener("deviceready", onDeviceReady, false);
       if(window.FormData){
           alert('this app support formdata!\n\n');
+          formdata = true;
       }
     }
 
@@ -24,11 +26,24 @@
       navigator.camera.cleanup();
     }
 
+    // Convert dataURL to Blob object
+    function dataURLtoBlob(dataURL) {
+      // Decode the dataURL    
+      var binary = atob(dataURL.split(',')[1]);
+      // Create 8-bit unsigned array
+      var array = [];
+      for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+      // Return our Blob object
+      return new Blob([new Uint8Array(array)], {type: 'image/png'});
+    }
+
     // Called when a photo is successfully retrieved
     //
-    function onPhotoDataSuccess(imageData) {
+    function onPhotoDataSuccess(imageDataURL) {
       // Uncomment to view the base64-encoded image data
-      // console.log(imageData);
+      // console.log(imageDataURL);
 
       // Get image handle
       //
@@ -60,7 +75,7 @@
          if(retries == 0){
            retries++;
            setTimeout(function(){
-             onPhotoDataSuccess(imageData);
+             onPhotoDataSuccess(imageDataURL);
            },1000)
          } else {
            retries = 0;
@@ -70,9 +85,35 @@
         //alert("Upload failed" + "error code:" + e.code);
       };
 
-      successImage();
+     /* var file = dataURLtoBlob(imageDataURL);
+      var size = file.size;
+      console.log('------base64 image size:' + size + '-------');*/
 
-     /* ft.upload(imageData, encodeURI("http://http://54.238.203.212/images"),
+      //var fd = new FormData();
+
+      //fd.append("first_1219",file);
+
+      if(formdata){
+        alert('formdata be true 4!');
+        dateTime = new Date();
+        $.ajax({
+          url: 'http://54.238.203.212/images',
+          type: 'POST',
+          // data: fd,
+          // processData: false,
+          // contentType: false,
+          contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+          data: { image: imageDataURL, fileName: dateTime.getTime() },
+          // data: {img: encodeURIComponent("ABCDF")}, 
+          success: function(res){
+            alert('ajax upload success!\n');
+          }
+        });
+      }
+
+      // successImage();
+
+     /* ft.upload(imageDataURL, encodeURI("http://http://54.238.203.212/images"),
                    successImage,
                    failImage,
                    options);*/
@@ -85,9 +126,9 @@
       // Show the captured photo
       // The inline CSS rules are used to resize the image
       //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
+      smallImage.src = "data:image/jpeg;base64," + imageDataURL;
       alert(dateTime.getTime());
-      alert(imageData.substr(imageData.lastIndexOf('/')+1));
+      alert(imageDataURL.substr(imageDataURL.lastIndexOf('/')+1));
     }
 
     // Called when a photo is successfully retrieved
