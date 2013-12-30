@@ -20,7 +20,10 @@ var Diary = new mongoose.Schema({
     author: String,
     message: String,
     releaseDate: Date,
-    picPath: String,    
+    picPath: String, 
+    year: String,
+    month: String,
+    day: String  
 });
 
 var DiaryModel = mongoose.model('Diary', Diary);
@@ -66,6 +69,9 @@ app.post('/images', function(req, res){
          tmpPath = req.body.path + '/' + fileName,
       targetPath = './public/uploads/' + fileName,
          picDate = new Date(),
+            year = picDate.getFullYear(),
+           month = picDate.getMonth() + 1 ,
+             day = picDate.getDate()
          message = '',
            diary = new DiaryModel({
               //author: req.body.author,
@@ -73,6 +79,9 @@ app.post('/images', function(req, res){
              message: '',
              releaseDate: picDate,
              picPath: '/uploads/' + fileName,
+                year: year,
+               month: month,
+                 day: day
           });
       binaryData = new Buffer(base64Data, 'base64').toString('binary');
   console.log('-------saved to database -------\n\n');
@@ -106,6 +115,18 @@ app.post('/images', function(req, res){
   console.log(req.file);
   res.send(data);*/
   res.end();
+});
+
+app.get('/api/diaries/:id', function(req, res){
+  //console.log('\n----------\n' + req.params.id);
+  return DiaryModel.findById(req.params.id, function(err, diary){
+     if(!err)
+       return res.send(diary);
+     else {
+       console.log('error occur maybe this id does\'nt in the database\n');
+       return null;
+     } 
+  });
 });
 
 app.put('/api/diaries/:id', function(req, res){
