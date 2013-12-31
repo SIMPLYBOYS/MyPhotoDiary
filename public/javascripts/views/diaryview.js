@@ -8,16 +8,17 @@ app.DiaryView = Backbone.View.extend({
   },
 
   initialize: function(){
-    this.collection = new app.Diary();
+    //this.collection = new app.Diary();
     
     this.listenTo(this.collection, 'reset', this.render);
-    this.collection.fetch({reset: true});
+    //this.collection.fetch({reset: true});
   },
   addOne: function(photo){
     var photoView = new app.PhotoView({model: photo});
     this.$el.append(photoView.render().el);
   },
   render: function(){
+    this.$el.empty();
     this.collection.forEach(this.addOne, this);
   }
 });
