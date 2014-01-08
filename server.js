@@ -53,6 +53,13 @@ app.get('/about', function(req, res){
 app.get('/demo', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary Demom'})
 });
+app.get('/year/:y', function(req, res){
+  res.render('demo.jade', {title: 'PhotoDiary per Year'})
+});
+app.get('/others/:id', function(req, res){
+  console.log('other demos:' + req.params.id);
+  res.render('others.jade', {title: 'Other Demos:' + req.params.id});
+});
 app.get('/contact', function(req, res){
   res.render('hello.jade', {title: 'Contact Us'});
 });
@@ -73,6 +80,7 @@ app.post('/images', function(req, res){
            month = picDate.getMonth() + 1 ,
              day = picDate.getDate()
          message = '',
+           binaryData = new Buffer(base64Data, 'base64').toString('binary')
            diary = new DiaryModel({
               //author: req.body.author,
               author: 'aaron',
@@ -83,13 +91,13 @@ app.post('/images', function(req, res){
                month: month,
                  day: day
           });
-      binaryData = new Buffer(base64Data, 'base64').toString('binary');
+      //binaryData = new Buffer(base64Data, 'base64').toString('binary');
   console.log('-------saved to database -------\n\n');
   diary.save(function(err){
     if(!err){
       console.log('created!')
     } else {
-      return console.log('err in created diary process!');
+      return console.log('error in created diary process!');
     }
     res.end();
   });
@@ -117,6 +125,11 @@ app.post('/images', function(req, res){
   res.end();
 });
 
+app.get('/diaries/:year/:id', function(req, res){
+  console.log('diary detail: ' + req.params.year + '/' + req.params.mon + '/' + req.params.day);
+  res.render('diary_detail.jade', {title: 'Diary Detail View'}); 
+});
+
 app.get('/api/diaries/:id', function(req, res){
   //console.log('\n----------\n' + req.params.id);
   return DiaryModel.findById(req.params.id, function(err, diary){
@@ -130,17 +143,31 @@ app.get('/api/diaries/:id', function(req, res){
 });
 
 app.put('/api/diaries/:id', function(req, res){
-  console.log('Update Diary: ' + req.params.id);
-  return DiaryModel.findById(req.params.id, function(err, pics){
-    pics.releaseDate = req.body.releaseDate;
+  console.log('Update Diary: ' + req.params.id + JSON.stringify(req.body));
+  return DiaryModel.findById(req.params.id, function(err, pic){
+    pic.releaseDate = req.body.releaseDate;
+    pic.message = req.body.message;
     //console.log(pics);  
-    return pics.save(function(err){
+    return pic.save(function(err){
       if(!err){
         console.log('diary update!');
       } else {
         console.log(err);
       }
     });
+  });
+});
+
+app.delete('/api/diaries/:id', function(req, res){
+  console.log('Delete Diary: ' + req.params.id);
+  return DiaryModel.findById(req.params.id, function(err, pic){
+   return pic.remove(function(err){
+     if(!err){
+       console.log('a Picture of Diary has been removed!');
+     } else {
+       console.log(err);
+     }
+   });
   });
 });
 

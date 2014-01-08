@@ -2,11 +2,14 @@ var app = app || {};
 
 app.Photo = Backbone.Model.extend({
        defaults: {
-         author: 'aaron_chou',
+         author: 'aaron',
          message: 'hello myphoto diary',
          picPath: 'Unknown',
-         releaseDate: '2013/12/29'
+         releaseDate: '',
+         year: '',
+         month: '',
+         day: ''
        },
-       
+       urlRoot: '/api/diaries',
        idAttribute: '_id'
 });

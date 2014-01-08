@@ -7,16 +7,21 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     link(rel='shortcut icon', href='/ico/favicon.png')
-    title Carousel Template for Bootstrap
+    title MyPhotoDiary 
     //
        Bootstrap core CSS
     link(href='/stylesheets/bootstrap.css', rel='stylesheet')
     //
        Custom styles for this template
     link(href='/stylesheets/carousel.css', rel='stylesheet')
+    
+    link(href='/stylesheets/style.css', rel='stylesheet')
   block head
     
-  body 
+  body
+    block feet
+    //
+      h1 Shuttle
     block content 
     include includes/footer
 

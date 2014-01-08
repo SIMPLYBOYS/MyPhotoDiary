@@ -7,7 +7,7 @@
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-              a.navbar-brand(href='#') Project name
+              a.navbar-brand(href='/') MyPhotoDiary 
             .navbar-collapse.collapse
               ul.nav.navbar-nav
                 li.active
@@ -15,22 +15,24 @@
                 li
                   a(href='/about') About
                 li
-                  a(href='#contact') Contact
+                  a(href='/contact') Contact
                 li.dropdown
                   a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    | Dropdown
+                    | Albums 
                     b.caret
                   ul.dropdown-menu
                     li
-                      a(href='#') Action
+                      a(href='/demo') DiaryList
                     li
-                      a(href='#') Another action
+                      a(href='/others/52bb042d5659363045000001') DiaryDetail
                     li
-                      a(href='#') Something else here
+                      a(href='/year/2014') Show Year 2014 Diary Only
+                    li
+                      a(href='/year/2013') Show Year 2013 Diary Only
                     li.divider
-                    li.dropdown-header Nav header
+                    li.dropdown-header Per Year Diary Detail View
                     li
-                      a(href='#') Separated link
+                      a(href='/diaries/2013/1') 2013 Per Year Detail 
                     li
-                      a(href='#') One more separated link
+                      a(href='/diaries/2014/1') 2014 Per Year Detail 
 
