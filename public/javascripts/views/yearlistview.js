@@ -27,13 +27,15 @@ app.DiaryYearListView = Backbone.View.extend({
     switch(yearPage) {
       case '2014':
         //alert('2014');
-        var year = this.collection.yearShow2014();
+        var year = this.collection.yearShow2014('all');
+        $('.badge').html(this.collection.yearShow2014().length);
         console.log(year.length);
         year.forEach(this.addOne, this);
         break;
       case '2013': 
         //alert('2013');
-        var year = this.collection.yearShow2013();
+        var year = this.collection.yearShow2013('all');
+        $('.badge').html(this.collection.yearShow2013().length);
         console.log(year.length);
         year.forEach(this.addOne, this);  
         break;

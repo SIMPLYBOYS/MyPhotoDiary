@@ -4,7 +4,7 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   routes: {
               '' : 'index',    
            'demo': 'demo',
-           'diaries/:year/:id': 'detail_diary_year',
+           'diaries/:year/:month/:id': 'detail_diary_year',
            'file/*path': 'file',
            'others': 'other_demo',
            'year/:y': 'year_diary'
@@ -26,7 +26,8 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     Backbone.history.start({pushState: true});
   },
   index: function(){
-    //alert("index router !!" );
+    $('.pull-right').hide();
+    //alert("index router !!" + this.DemoDiary.length);
     /*this.Diary.fetch();
     this.DiaryView = new app.DiaryView({collection: this.Diary});
     $('.row.demo').append(this.DiaryView.el);*/
@@ -62,16 +63,17 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
         break;
     }
   },
-  detail_diary_year: function(year, id){
+  detail_diary_year: function(year, month, id){
+    console.log('month: ' + month);
     switch (year){
       case '2014':
         //alert('router works  !!' + year + year + month + id);
-        var diaryDetailView = new app.DiaryDetailView({collection: this.DemoDiary},{year: '2014'});
+        var diaryDetailView = new app.DiaryDetailView({collection: this.DemoDiary},{year: '2014'}, {month: month});
         this.DemoDiary.fetch({reset: true});
         console.log(id);
         break;
       case '2013':
-        var diaryDetailView = new app.DiaryDetailView({collection: this.DemoDiary},{year: '2013'});
+        var diaryDetailView = new app.DiaryDetailView({collection: this.DemoDiary},{year: '2013'}, {month: month});
         this.DemoDiary.fetch({reset: true});
         break;
       default:

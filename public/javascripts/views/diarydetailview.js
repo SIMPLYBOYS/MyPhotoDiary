@@ -1,15 +1,18 @@
 var app = app || {},
-    yearPage;
+    yearPage,
+    monthPage;
+    
 
 app.DiaryDetailView = Backbone.View.extend({
    tagName: 'div',
    className: 'row featurette',
   //el: '.col-xs-6.col-md-5.col-sm-5.col-lg-4',
  
-  initialize: function(diary, y){
+  initialize: function(diary, y, m){
     yearPage = y.year;
+    monthPage = m.month;
     //this.collection = new app.Diary();
-    //this.collection.on('reset', this.render, this); 
+    //this.collection.on('reset', this.render, this);  
     this.listenTo(this.collection, 'reset', this.addAll);
     this.listenTo(this.collection, 'all', this.addAll)
     //this.collection.fetch({reset: true});
@@ -29,11 +32,13 @@ app.DiaryDetailView = Backbone.View.extend({
     $('.datadetail').empty();
     switch(yearPage) {
       case '2014':
-        var year_group = this.collection.yearShow2014();
+        var year_group = this.collection.yearShow2014(monthPage);
+        $('.badge').html(this.collection.yearShow2014().length);
         year_group.forEach(this.addOne, this);
         break;
       case '2013':
         var year_group = this.collection.yearShow2013();
+        $('.badge').html(this.collection.yearShow2013().length);
         year_group.forEach(this.addOne, this);
         break;
       default:

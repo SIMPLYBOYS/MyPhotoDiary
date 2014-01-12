@@ -25,8 +25,15 @@ app.Diary = Backbone.Collection.extend({
     return this.where({year: '2014'}).length;
   },
 
-  yearShow2014: function(){
-    return this.where({year: '2014'});
+  yearShow2014: function(m){
+    if(m!='all'){
+     console.log('yearShow2014 -----' + m + '----\n');
+     //return this.where({year: '2014', month: m});
+     return this.where({year: '2014'});
+    } else {
+      console.log('all year list');
+      return this.where({year: '2014'});
+    }
   },
 
   yearShow2013: function(){
