@@ -1,4 +1,4 @@
-#myCarousel.carousel.slide(data-ride='carousel')
+#myCarousel.carousel.hidden-xs.hidden-md.hidden-sm.slide(data-ride='carousel')
     //
          Indicators 
       ol.carousel-indicators
@@ -10,7 +10,14 @@
           img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel-1.png', alt='First slide')
           .container
             .carousel-caption
-              h1 My PhotoDiary
+             h1 My PhotoDiary
+              p 
+               | Take a Photo at the greatest moment each day life by your cellphone
+               br
+               | Support Android & iOS
+              p
+               a.btn.btn-lg.btn-primary(href='#', role='button') Sign up today 
+             // 
               p
                 | Note: If you're viewing this page via a 
                 code file://
