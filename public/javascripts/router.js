@@ -4,10 +4,13 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   routes: {
               '' : 'index',    
            'demo': 'demo',
+           'about': 'about',
            'diaries/:year/:month/:id': 'detail_diary_year',
            'file/*path': 'file',
+           'contact': 'contact',
            'others': 'other_demo',
-           'year/:y': 'year_diary'
+           'year/:y': 'year_diary',
+           'cardui_3': 'cardui_demo'
            //'*path': 'notFound'
   },
   file: function(path){
@@ -32,6 +35,9 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     this.DiaryView = new app.DiaryView({collection: this.Diary});
     $('.row.demo').append(this.DiaryView.el);*/
   },
+  about: function(){
+    $('.pull-right').hide();
+  },
   demo: function(){
     //alert('demo!');
     var  DemoDiaryListView = new app.DiaryListView({collection: this.DemoDiary});
@@ -39,7 +45,21 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     /*this.DemoDiary.fetch();
     this.DemoDiary.trigger('reset');*/
     //alert(this.DemoDiary.authorCount());
-    $('.row.demo').append(DemoDiaryListView.el);   
+    //$('.row.demo').append(DemoDiaryListView.el);   
+  },
+  cardui_demo: function(){
+    var DemoDiaryCardView = new app.DiaryCardView({collection: this.DemoDiary});
+    this.DemoDiary.fetch({reset: true});
+    //$('.container').append(DemoDiaryCardView.el);
+    //$('row.demo').append(DemoDiaryCardView.el);
+    //alert('width of the window: '+$(document).width());
+  },
+  contact: function(){
+     $('.pull-right').hide();
+    var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
+    this.DemoDiary.fetch({reset: true});
+    $('.row.demo').append(ContactDiaryListView.el);
+    $('.photowall').photoWall({speed: 500});
   },
   other_demo: function(){
     alert('other demos!');

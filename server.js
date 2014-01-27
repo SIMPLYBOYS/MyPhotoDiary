@@ -18,6 +18,7 @@ var app = express();
 //Schemas
 var Diary = new mongoose.Schema({
     author: String,
+    title: String,
     message: String,
     releaseDate: Date,
     picPath: String, 
@@ -53,6 +54,15 @@ app.get('/about', function(req, res){
 app.get('/demo', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary Demom'})
 });
+app.get('/cardui', function(req, res){
+  res.render('cardui.jade', {title: 'Badic CardUI Demo'});
+});
+app.get('/cardui_2', function(req, res){
+  res.render('cardui_2.jade', {title: 'Fix Colume CardUI Demo'});
+});
+app.get('/cardui_3', function(req, res){
+  res.render('cardui_3.jade', {title: 'RealWorld CardUI Demo'});
+});
 app.get('/year/:y', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary per Year'})
 });
@@ -61,7 +71,7 @@ app.get('/others/:id', function(req, res){
   res.render('others.jade', {title: 'Other Demos:' + req.params.id});
 });
 app.get('/contact', function(req, res){
-  res.render('hello.jade', {title: 'Contact Us'});
+  res.render('contact.jade', {title: 'Contact Us'});
 });
 app.get('/images', function(req, res){
   console.log('images info get request!\n');
@@ -125,8 +135,8 @@ app.post('/images', function(req, res){
   res.end();
 });
 
-app.get('/diaries/:year/:id', function(req, res){
-  console.log('diary detail: ' + req.params.year + '/' + req.params.mon + '/' + req.params.day);
+app.get('/diaries/:year/:month/:day', function(req, res){
+  console.log('diary detail: ' + req.params.year + '/' + req.params.month + '/' + req.params.day);
   res.render('diary_detail.jade', {title: 'Diary Detail View'}); 
 });
 
@@ -142,11 +152,21 @@ app.get('/api/diaries/:id', function(req, res){
   });
 });
 
+app.get('/testapi', function(req, res){
+  console.log('----- testing api -----\n');
+  return DiaryModel.find({year: '2013', day: '31'}, function(err, pic){
+    if(!err)
+      return res.send(pic);
+  });
+  //db.diaries.find({$and: [{year: '2013'}, {day: '31'}]})  
+});
+
 app.put('/api/diaries/:id', function(req, res){
   console.log('Update Diary: ' + req.params.id + JSON.stringify(req.body));
   return DiaryModel.findById(req.params.id, function(err, pic){
     pic.releaseDate = req.body.releaseDate;
     pic.message = req.body.message;
+    pic.title = req.body.title;
     //console.log(pics);  
     return pic.save(function(err){
       if(!err){
@@ -172,14 +192,23 @@ app.delete('/api/diaries/:id', function(req, res){
 });
 
 app.get('/api/diaries', function(req, res){
-  return DiaryModel.find(function(err, diaries){
+  DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
+    if(!err){
+      console.log(diaries);
+      //console.log('--------- 20140105------\n')
+      return res.send(diaries);
+    } else {
+      return console.log(err);
+    }
+}); 
+  /*return DiaryModel.find({},function(err, diaries){
     if(!err){
       console.log(diaries);
       return res.send(diaries);
     } else {
       return console.log(err);
     }
-  });
+  });*/
 });
 
 http.createServer(app).listen(app.get('port'), function(){

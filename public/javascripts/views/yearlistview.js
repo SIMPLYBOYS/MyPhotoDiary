@@ -18,7 +18,7 @@ app.DiaryYearListView = Backbone.View.extend({
     //this.collection.fetch({reset: true});
   },
   addOne: function(photo){
-    var photoView = new app.PhotoView({model: photo});
+    var photoView = new app.PhotoListView({model: photo});
     this.$el.append(photoView.render().el);
   },
   addAll: function(){
