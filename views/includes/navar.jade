@@ -1,6 +1,6 @@
 .navbar-wrapper
     .container
-        .navbar.navbar-inverse.navbar-static-top
+        .navbar.navbar-inverse.navbar-fixed-top
           .container
             .navbar-header
               button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
@@ -11,20 +11,25 @@
             .navbar-collapse.collapse
               ul.nav.navbar-nav
                 li.active
-                  a(href='/') Home
+                  a(href='/') 
+                   span.glyphicon.glyphicon-home
+                   |  Home
                 li
-                  a(href='/about') About
+                  a(href='/about') 
+                   span.glyphicon.glyphicon-new-window
+                   |  About
                 li
-                  a(href='/contact') Contact
+                  a(href='/contact') 
+                   span.glyphicon.glyphicon-earphone
+                   |  Contact
                 li.dropdown
                   a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    | Albums 
+                    span.glyphicon.glyphicon-picture
+                    |  Albums 
                     b.caret
                   ul.dropdown-menu
                     li
-                      a(href='/demo') DiaryList
-                    li
-                      a(href='/others/52bb042d5659363045000001') DiaryDetail
+                      a(href='/demo') DiaryCardList
                     li
                       a(href='/year/2014') Show Year 2014 Diary Only
                     li
@@ -35,6 +40,9 @@
                       a(href='/diaries/2013/1/1') 2013 Per Year Detail 
                     li
                       a(href='/diaries/2014/1/1') 2014 Per Year Detail 
+                    li.dropdown-header CardUI View
+                      a(href='/cardui_2') CardUI View
+                      a(href='/cardui_3') CardUI Demo2
                ul.nav.navbar-nav.pull-right
                  li
                   a(href='/', style='padding-right: 30px;') 

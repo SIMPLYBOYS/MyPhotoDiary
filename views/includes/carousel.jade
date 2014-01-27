@@ -5,9 +5,11 @@
         li.active(data-target='#myCarousel', data-slide-to='0')
         li(data-target='#myCarousel', data-slide-to='1')
         li(data-target='#myCarousel', data-slide-to='2')
+        li(data-target='#myCarousel', data-slide-to='3')
+        li(data-target='#myCarousel', data-slide-to='4')
       .carousel-inner
         .item.active
-          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel-1.png', alt='First slide')
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-1.png', alt='First slide')
           .container
             .carousel-caption
              h1 My PhotoDiary
@@ -25,7 +27,7 @@
               p
                 a.btn.btn-lg.btn-primary(href='#', role='button') Sign up today
         .item
-          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel-2.png', alt='Second slide')
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-2.png', alt='Second slide')
           .container
             .carousel-caption
               h1 Another example headline.
@@ -34,7 +36,7 @@
               p
                 a.btn.btn-lg.btn-primary(href='#', role='button') Learn more
         .item
-          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel-3.png', alt='Third slide')
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-3.png', alt='Third slide')
           .container
             .carousel-caption
               h1 One more for good measure.
@@ -42,6 +44,19 @@
                 | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
               p
                 a.btn.btn-lg.btn-primary(href='/demo', role='button') Browse gallery
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-4.png', alt='Fourth slide')
+          .container
+            .carousel-caption
+             h1 Testing Carousel
+
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-5.png', alt='Fifth slide')
+          .container
+             .carousel-caption
+             h1 Testing Carousel
+         
+
       a.left.carousel-control(href='#myCarousel', data-slide='prev')
         span.glyphicon.glyphicon-chevron-left
       a.right.carousel-control(href='#myCarousel', data-slide='next')
