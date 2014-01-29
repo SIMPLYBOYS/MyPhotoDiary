@@ -141,6 +141,13 @@ body {
     border:none; 
 }
 
+#time-stamp {
+  font-size:xx-small;
+  border-top:#EEE6E6 1px solid;
+  margin:0px;
+  padding:0;
+}
+
 .rightColumn,
 .leftColumn {
     display:inline-block;
