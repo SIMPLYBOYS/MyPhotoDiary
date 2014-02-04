@@ -14,29 +14,45 @@ hr.featurette-divider
        Bootstrap core JavaScript
     //
        Placed at the end of the document so the pages load faster
+    // scripts 
     script(src="https://code.jquery.com/jquery-1.10.2.min.js")
     script(src="/javascripts/libs/bootstrap.min.js")
     script(src="/javascripts/libs/holder.js")
+    script(src="/javascripts/libs/masonry.pkgd.js")
+    script(src="/javascripts/libs/imagesloaded.pkgd.js")
+    //
+      script(src="/javascripts/libs/jquery.infinitescroll.js")
     //
      script(src="/javascripts/libs/jquery.photoWall.js")
+    script(src="/javascripts/libs/infiniScroll.js")
     script(src="/javascripts/libs/lightbox-2.6.min.js")
     script(src='http://documentcloud.github.com/underscore/underscore-min.js')
     script(src='http://documentcloud.github.com/backbone/backbone-min.js')
+
+    // Models/Collections 
     script(src="/javascripts/models/photo.js")
+    script(src="/javascripts/collections/diary.js")
+
+    // Views 
     script(src="/javascripts/views/photoview.js")
     script(src="/javascripts/views/photodetailview.js")
     script(src="/javascripts/views/photodataview.js")
     script(src="/javascripts/views/photolistview.js")
+    script(src="/javascripts/views/photomasonryview.js")
+    script(src="/javascripts/views/photocardview.js")
     //
      script(src="/javascripts/views/photowallview.js")
+    //
+      diary part of view
     script(src="/javascripts/views/diarylistview.js")
     script(src="/javascripts/views/diarycardview.js")
-    script(src="/javascripts/views/photocardview.js")
     script(src="/javascripts/views/diarydetailview.js")
+    script(src="/javascripts/views/diarymasonryview.js")
     //
      script(src="/javascripts/views/diarywallview.js")
     script(src="/javascripts/views/yearlistview.js")
-    script(src="/javascripts/collections/diary.js")
+
+    // Router/app 
     script(src="/javascripts/router.js")
     script(src="/javascripts/app.js")
   

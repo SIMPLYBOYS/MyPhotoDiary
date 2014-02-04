@@ -10,7 +10,8 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
            'contact': 'contact',
            'others': 'other_demo',
            'year/:y': 'year_diary',
-           'cardui_3': 'cardui_demo'
+           'cardui_3': 'cardui_demo',
+           'masonry': 'masonry'
            //'*path': 'notFound'
   },
   file: function(path){
@@ -47,6 +48,10 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //alert(this.DemoDiary.authorCount());
     //$('.row.demo').append(DemoDiaryListView.el);   
   },
+  masonry: function(){
+    var DiaryMansonryView = new app.DiaryMasonryView({collection: this.DemoDiary});
+    this.DemoDiary.fetch({reset: true}); 
+  },
   cardui_demo: function(){
     var DemoDiaryCardView = new app.DiaryCardView({collection: this.DemoDiary});
     this.DemoDiary.fetch({reset: true});
@@ -55,11 +60,11 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //alert('width of the window: '+$(document).width());
   },
   contact: function(){
-     $('.pull-right').hide();
+    $('.pull-right').hide();
     var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
     this.DemoDiary.fetch({reset: true});
     $('.row.demo').append(ContactDiaryListView.el);
-    $('.photowall').photoWall({speed: 500});
+    //$('.photowall').photoWall({speed: 500});
   },
   other_demo: function(){
     alert('other demos!');
