@@ -1,4 +1,6 @@
-var app = app || {};
+var app = app || {},
+    elems = [];
+
 
 app.DiaryMasonryView = Backbone.View.extend({
   el: '#container',
@@ -10,7 +12,12 @@ app.DiaryMasonryView = Backbone.View.extend({
   initialize: function(){
      //this.collection = new app.Diary();
     //this.collection.on('reset', this.render, this); 
+    _.bindAll(this, 'addAll', 'addOne', 'appendOne', 'appendView');
+
     this.listenTo(this.collection, 'reset', this.addAll);
+    this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendView, onFetch: function(){ console.log('onFetch!!'); }, pageSize: 6, scrollOffset: 100, includePage: true});
+    this.infiniScroll.resetScroll();
+    var p = this.collection.fetch({reset: true});
     /*content = $('.container');
     this.layoutColumns();
     $(window).resize(this.onResize);
@@ -23,13 +30,17 @@ app.DiaryMasonryView = Backbone.View.extend({
     this.$el.append(photomasonryView.render().el);
   },
   addAll: function(){
+
+     //alert('length of collection: '+ this.collection.length);
+
     /*content = $('.container');
     this.layoutColumns();
     $(window).resize(this.onResize);*/
     //alert('$(document).width:' + $(document).width());
 
     //alert('DiaryListView render!' + this.collection.yearShow2014().length);
-    $('.badge').html(this.collection.yearShow2014().length + this.collection.yearShow2013().length);
+
+    /*$('.badge').html(this.collection.yearShow2014().length + this.collection.yearShow2013().length);*/
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
     var $container = $('#container').masonry();
@@ -95,5 +106,30 @@ app.DiaryMasonryView = Backbone.View.extend({
         });
       }); 
     },500);*/
+  },
+  appendView: function(collection, response){
+   //alert(JSON.stringify(response[0]));
+   //_.each(response, this.addOne, this);
+   //response.forEach(this.addOne, this);
+   var $container = $('#container').masonry({itemSelect: '.picbox .demobox',
+          columnWidth: 300,
+          isAnimated: true,
+          animate: true
+        }),
+        appendlist;
+
+   appendlist = _.map(response, function(listconfig){
+     //console.log(listconfig);
+     return new app.Photo(listconfig); 
+   });
+   //alert(JSON.stringify(response));
+   appendlist.forEach(this.appendOne, this);
+   $container.append(elems).masonry('appended', elems); 
+   elems.splice(0,elems.length); 
+   console.log('response.length: ' + response.length + '\ncollection.length: ' + collection.length + '\nelems: ' + elems.length);
+  },
+  appendOne: function(photo){
+    var photomasonryView = new app.PhotoMasonryView({model: photo});
+    elems.push(photomasonryView.render().el);
   }
 });

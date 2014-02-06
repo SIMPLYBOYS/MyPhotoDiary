@@ -63,6 +63,9 @@ app.get('/cardui_2', function(req, res){
 app.get('/cardui_3', function(req, res){
   res.render('cardui_3.jade', {title: 'RealWorld CardUI Demo'});
 });
+app.get('/masonry', function(req, res){
+  res.render('masonry.jade', {title: 'RealWorld CardUI Demo'});
+});
 app.get('/year/:y', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary per Year'})
 });
@@ -192,7 +195,34 @@ app.delete('/api/diaries/:id', function(req, res){
 });
 
 app.get('/api/diaries', function(req, res){
-  DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
+   DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
+      if(!err){
+        console.log(diaries);
+        return res.send(diaries);
+      } else {
+        return console.log(err);
+      }
+    });
+});
+
+app.get('/api/masonry_diaries', function(req, res){
+  console.log('page_size: ' + req.param('page_size') + '\npage:' + req.param('page'));
+  var page_size = req.param('page_size'),
+      page = req.param('page'),
+      totalPages,
+      skipForm = (page*page_size) - page_size; 
+
+
+  if(page_size === undefined){
+     page_size = 12;
+     page = 1;
+  }  
+  
+  skipFrom = (page*page_size) - page_size;
+  console.log(skipFrom);
+  
+  //console.log('============== page_size:' + req.param('page_size') + '==============');
+  /*DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
     if(!err){
       console.log(diaries);
       //console.log('--------- 20140105------\n')
@@ -200,15 +230,27 @@ app.get('/api/diaries', function(req, res){
     } else {
       return console.log(err);
     }
-}); 
-  /*return DiaryModel.find({},function(err, diaries){
+  });*/
+
+  var query = DiaryModel.find({}).skip(skipFrom).limit(page_size).sort('-releaseDate');
+
+  query.exec(function(error, diaries){
+    if(error){
+      console.log('error');
+    } else {
+      return res.send(diaries);
+    }
+  }); 
+  
+
+  /*DiaryModel.find({},function(err, diaries){
     if(!err){
       console.log(diaries);
       return res.send(diaries);
     } else {
       return console.log(err);
     }
-  });*/
+  })*/
 });
 
 http.createServer(app).listen(app.get('port'), function(){

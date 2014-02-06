@@ -23,7 +23,8 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     alert('Sorry! There is no content here!.');
   },
   initialize: function(){
-    this.DemoDiary = new app.Diary(); 
+    this.DemoDiary = new app.Diary(app.Photo); 
+    this.MasonryDiary = new app.MasonryDiary(app.Photo);
   }, 
   start: function(){
     //alert('history.start!');
@@ -49,8 +50,7 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //$('.row.demo').append(DemoDiaryListView.el);   
   },
   masonry: function(){
-    var DiaryMansonryView = new app.DiaryMasonryView({collection: this.DemoDiary});
-    this.DemoDiary.fetch({reset: true}); 
+    var DiaryMansonryView = new app.DiaryMasonryView({collection: this.MasonryDiary});
   },
   cardui_demo: function(){
     var DemoDiaryCardView = new app.DiaryCardView({collection: this.DemoDiary});
