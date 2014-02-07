@@ -15,9 +15,18 @@ app.DiaryMasonryView = Backbone.View.extend({
     _.bindAll(this, 'addAll', 'addOne', 'appendOne', 'appendView');
 
     this.listenTo(this.collection, 'reset', this.addAll);
-    this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendView, onFetch: function(){ console.log('onFetch!!'); }, pageSize: 6, scrollOffset: 100, includePage: true});
+    this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendView, onFetch: function(){ $('footer p').animate({ opacity: 0 }); }, onLoad: function(){alert('Hello my Plug-in.');}, onEnd: function(){ alert('It\'s reach the End');  }, pageSize: 6, scrollOffset: 100, includePage: true});
     this.infiniScroll.resetScroll();
     var p = this.collection.fetch({reset: true});
+
+    $.scrollUp({
+      scrollDistance:300,
+      scrollSpeed: 50,
+      animation: 'fade',  
+      animationInSpeed: 200,
+      animationOutSpeed: 200,
+      scrollText: 'Back to Top' 
+    }); 
     /*content = $('.container');
     this.layoutColumns();
     $(window).resize(this.onResize);
@@ -76,7 +85,9 @@ app.DiaryMasonryView = Backbone.View.extend({
     
     
     $container.masonry('bindResize');
+    $('#container').css({ opacity: 0 });
     $container.imagesLoaded().done(function(instance){
+      $('#container').animate({ opacity:1 });
       $container.masonry({
           itemSelect: '.picbox .demobox',
           columnWidth: 300,
@@ -114,9 +125,15 @@ app.DiaryMasonryView = Backbone.View.extend({
    var $container = $('#container').masonry({itemSelect: '.picbox .demobox',
           columnWidth: 300,
           isAnimated: true,
+          isFitWidth: true,
           animate: true
         }),
         appendlist;
+
+   $container.masonry('on', 'layoutComplete', function(msnyInstance, laidOutItems){ 
+    //console.log('length of laidOutItems: ' + laidOutItems.length); 
+    msnyInstance.hide();
+   })
 
    appendlist = _.map(response, function(listconfig){
      //console.log(listconfig);
@@ -124,6 +141,9 @@ app.DiaryMasonryView = Backbone.View.extend({
    });
    //alert(JSON.stringify(response));
    appendlist.forEach(this.appendOne, this);
+   //$(elems).animate({ opacity:0 });  
+   $('footer p').animate({ opacity:1 });
+   
    $container.append(elems).masonry('appended', elems); 
    elems.splice(0,elems.length); 
    console.log('response.length: ' + response.length + '\ncollection.length: ' + collection.length + '\nelems: ' + elems.length);
