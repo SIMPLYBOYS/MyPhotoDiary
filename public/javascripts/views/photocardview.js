@@ -1,9 +1,9 @@
 var app = app || {};
 
 app.PhotoCardView = Backbone.View.extend({
-   className: 'card',
+   className: 'card fade-in',
 
-   template: _.template('<% if (typeof(date)==="undefined") { %><a href=<%= picPath %> class="thumbnail"><% } %><div class="card-image"><img data-src="holder.js/100%x200" alt=<%= author %> style="height: 200px; width: 100%; display:block;" src=<%= picPath %> </a><% if(message!=="") {%><div class=banner></div><h5><%= message%></h5><%}%></div><p><p>'),
+   template: _.template('<% if (typeof(date)==="undefined") { %><a href=<%= picPath %> <% } %><div class="card-image"><img alt=<%= author %> src=<%= picPath %> </a><% if(message!=="") {%><div class=banner></div><h5><%= message%></h5><%}%></div> <p id="time-stamp"><%=year %>-<%= month %>-<%= day %></p>'),
 
    render: function(){
      //var html = '<h3>' + this.model.get('author') + '</h3>';

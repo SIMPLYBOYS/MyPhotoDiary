@@ -3,7 +3,7 @@ var app = app || {};
 app.PhotoMasonryView = Backbone.View.extend({
    className: 'picbox',
 
-   template: _.template('<a href=<%= picPath %><% if(message!=="") {%> title=<%= message%> <%}%> data-lightbox=<%= _id %> ><img src=<%= picPath %>>'),
+   template: _.template('<a href=<%= picPath %><% if(message!=="") {%> title=<%= message%> <%}%> data-lightbox=<%= _id %> ><img class="fade-in" src=<%= picPath %> id=<%= _id %>>'),
 
    render: function(){
      //var html = '<h3>' + this.model.get('author') + '</h3>';
