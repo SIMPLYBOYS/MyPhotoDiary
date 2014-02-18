@@ -1,5 +1,7 @@
 var app = app || {},
-    elems = [];
+    elems = [],
+    notifElem,
+    notifyTimeout;
 
 
 app.DiaryMasonryView = Backbone.View.extend({
@@ -12,10 +14,11 @@ app.DiaryMasonryView = Backbone.View.extend({
   initialize: function(){
      //this.collection = new app.Diary();
     //this.collection.on('reset', this.render, this); 
-    _.bindAll(this, 'addAll', 'addOne', 'appendOne', 'appendView');
+    _.bindAll(this, 'addAll', 'addOne', 'appendOne', 'appendView','checkEnd');
+    notifElem = $('#notification');
 
     this.listenTo(this.collection, 'reset', this.addAll);
-    this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendView, onFetch: function(){ $('footer p').animate({ opacity: 0 }); }, onLoad: function(){alert('Hello my Plug-in.');}, onEnd: function(){ alert('It\'s reach the End');  }, pageSize: 6, scrollOffset: 100, includePage: true});
+    this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: this.appendView, onFetch: function(){ $('footer p').animate({ opacity: 0 }); }, onLoad: function(){alert('Hello my Plug-in.');}, onEnd: function(){ /*alert('Reach The End Of Masonry Page!');*/}, pageSize: 6, scrollOffset: 100, includePage: true});
     this.infiniScroll.resetScroll();
     var p = this.collection.fetch({reset: true});
 
@@ -33,6 +36,22 @@ app.DiaryMasonryView = Backbone.View.extend({
     //this.collection.fetch({reset: true});*/
     
   }, 
+  notify: function(message){
+    notifElem.html(message);
+    notifElem.css("transition","none");
+    notifElem.css("display","block");
+    notifElem.css("opacity","1");
+
+    if(notifyTimeout){
+      clearTimeout(notifyTimeout);
+    }
+ 
+    notifyTimeout = setTimeout(this.hideNotify, 1000);
+  },
+  hideNotify: function(){
+    notifElem.css("transition","opacity 1.0s");
+    notifElem.css("opacity","0");
+  },
   addOne: function(photo){
     console.log('addOne\n');
     var photomasonryView = new app.PhotoMasonryView({model: photo});
@@ -118,6 +137,9 @@ app.DiaryMasonryView = Backbone.View.extend({
       }); 
     },500);*/
   },
+  checkEnd: function(){
+    this.notify('Reach the End of MasonryPage!');
+  },
   appendView: function(collection, response){
    //alert(JSON.stringify(response[0]));
    //_.each(response, this.addOne, this);
@@ -126,13 +148,13 @@ app.DiaryMasonryView = Backbone.View.extend({
           columnWidth: 300,
           isAnimated: true,
           isFitWidth: true,
-          animate: true
+          animate: true  
         }),
         appendlist;
 
    $container.masonry('on', 'layoutComplete', function(msnyInstance, laidOutItems){ 
     //console.log('length of laidOutItems: ' + laidOutItems.length); 
-    msnyInstance.hide();
+    //msnyInstance.hide();
    })
 
    appendlist = _.map(response, function(listconfig){
@@ -146,6 +168,11 @@ app.DiaryMasonryView = Backbone.View.extend({
    
    $container.append(elems).masonry('appended', elems); 
    elems.splice(0,elems.length); 
+   if(response.length > 0){
+     this.notify('Have Next Page!');
+   } else {
+      this.checkEnd();
+   }
    console.log('response.length: ' + response.length + '\ncollection.length: ' + collection.length + '\nelems: ' + elems.length);
   },
   appendOne: function(photo){
