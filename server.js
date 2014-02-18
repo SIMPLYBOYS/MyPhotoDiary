@@ -57,11 +57,11 @@ app.get('/demo', function(req, res){
 app.get('/cardui', function(req, res){
   res.render('cardui.jade', {title: 'Badic CardUI Demo'});
 });
-app.get('/cardui_2', function(req, res){
+/*app.get('/cardui_2', function(req, res){
   res.render('cardui_2.jade', {title: 'Fix Colume CardUI Demo'});
-});
+});*/
 app.get('/cardui_3', function(req, res){
-  res.render('cardui_3.jade', {title: 'RealWorld CardUI Demo'});
+  res.render('cardui_3.jade', {title: 'Formal version of CardUI Demo'});
 });
 app.get('/masonry', function(req, res){
   res.render('masonry.jade', {title: 'RealWorld CardUI Demo'});
@@ -157,10 +157,11 @@ app.get('/api/diaries/:id', function(req, res){
 
 app.get('/testapi', function(req, res){
   console.log('----- testing api -----\n');
-  return DiaryModel.find({year: '2013', day: '31'}, function(err, pic){
+  res.redirect('/cardui_3');
+  /*return DiaryModel.find({year: '2013', day: '31'}, function(err, pic){
     if(!err)
       return res.send(pic);
-  });
+  });*/
   //db.diaries.find({$and: [{year: '2013'}, {day: '31'}]})  
 });
 
@@ -195,7 +196,7 @@ app.delete('/api/diaries/:id', function(req, res){
 });
 
 app.get('/api/diaries', function(req, res){
-   DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
+   DiaryModel.find({}).sort('-releaseDate').exec(function(err, diaries){
       if(!err){
         console.log(diaries);
         return res.send(diaries);
@@ -216,10 +217,11 @@ app.get('/api/masonry_diaries', function(req, res){
   if(page_size === undefined){
      page_size = 12;
      page = 1;
-  }  
-  
-  skipFrom = (page*page_size) - page_size;
-  console.log(skipFrom);
+     skipFrom = 0; 
+  } else {  
+    skipFrom = (page*page_size) - page_size + 12;
+    console.log(skipFrom);
+  }
   
   //console.log('============== page_size:' + req.param('page_size') + '==============');
   /*DiaryModel.find().sort('-releaseDate').exec(function(err, diaries){
