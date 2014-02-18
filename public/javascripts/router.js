@@ -31,14 +31,14 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     Backbone.history.start({pushState: true});
   },
   index: function(){
-    $('.pull-right').hide();
+    $('#diary_num').hide();
     //alert("index router !!" + this.DemoDiary.length);
     /*this.Diary.fetch();
     this.DiaryView = new app.DiaryView({collection: this.Diary});
     $('.row.demo').append(this.DiaryView.el);*/
   },
   about: function(){
-    $('.pull-right').hide();
+    $('#diary_num').hide();
   },
   demo: function(){
     //alert('demo!');
@@ -50,17 +50,19 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //$('.row.demo').append(DemoDiaryListView.el);   
   },
   masonry: function(){
+    $('#diary_num').hide();
     var DiaryMansonryView = new app.DiaryMasonryView({collection: this.MasonryDiary});
   },
   cardui_demo: function(){
-    var DemoDiaryCardView = new app.DiaryCardView({collection: this.DemoDiary});
-    this.DemoDiary.fetch({reset: true});
+    $('#diary_num').hide();
+    var DemoDiaryCardView = new app.DiaryCardView({collection: this.MasonryDiary});
+    //var DemoDiaryCardView = new app.DiaryCardView({collection: this.MasonryDiary}); 
     //$('.container').append(DemoDiaryCardView.el);
     //$('row.demo').append(DemoDiaryCardView.el);
     //alert('width of the window: '+$(document).width());
   },
   contact: function(){
-    $('.pull-right').hide();
+    $('#diary_num').hide();
     var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
     this.DemoDiary.fetch({reset: true});
     $('.row.demo').append(ContactDiaryListView.el);

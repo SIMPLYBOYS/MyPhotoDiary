@@ -20,6 +20,8 @@
       success: function(){ },
       error: function(){ },
       onFetch: function(){ },
+      onLoad: function(){ },
+      onEnd: function(){ },
       target: $(window),
       param: "until",
       extraParams: {},
@@ -62,12 +64,21 @@
       self.options.onFetch();
     };
 
+    self.onEnd = function() {
+      self.options.onEnd();
+    };
+
+    self.onLoad = function() {
+      self.options.onLoad();
+    };
+
     self.fetchSuccess = function(collection, response) {
       if ((self.options.strict && collection.length >= (page + 1) * self.options.pageSize) || (!self.options.strict && response.length > 0)) {
         self.enableFetch();
         page += 1;
       } else {
         self.disableFetch();
+        self.options.onEnd();
       }
       self.options.success(collection, response);
     };
@@ -89,9 +100,11 @@
 
       if (scrollY >= docHeight - self.options.scrollOffset && fetchOn && prevScrollY <= scrollY) {
         var lastModel = self.collection.last();
-        if (!lastModel) { return; }
+        //console.log('collection legnth @ infinite scroll length: ' + _.size(collection));
+        if (!lastModel) { self.options.onEnd(); return; }
 
         self.onFetch();
+        //self.onLoad();
         self.disableFetch();
         self.collection.fetch({
           success: self.fetchSuccess,
@@ -99,7 +112,7 @@
           remove: self.options.remove,
           data: $.extend(buildQueryParams(lastModel), self.options.extraParams)
         });
-      }
+      } 
       prevScrollY = scrollY;
     };
 
