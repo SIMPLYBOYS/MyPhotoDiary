@@ -82,8 +82,10 @@ app.DiaryCardView = Backbone.View.extend({
   addAll: function(){
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
+    /*$('.iframe').colorbox({iframe:true, width:'90%', height:'90%', rel:'iframe'});
+    $('.group1').colorbox({rel:'gruop1', speed:500, slideshow: false, slideshowSpeed: 4000, width:'80%', height:'80%'});*/
     var $container = $('#container').masonry();
-    //yearItems.forEach(this.addOne, this);a
+    //yearItems.forEach(this.addOne, this);
     
     $container.masonry('bindResize');
     $('#container').css({opacity: 0});

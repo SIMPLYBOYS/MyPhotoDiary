@@ -6,4 +6,5 @@ $(function(){
   //alert('Backbone Test Begin !');
   //new app.DiaryView();
   PhotoDiaryApp.start();
+
 });
