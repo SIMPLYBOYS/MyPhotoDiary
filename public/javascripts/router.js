@@ -32,7 +32,7 @@ define(['jquery',
            },
            start: function(){
 	     console.log('--- start ---');
-	     Backbone.history.start({pushSate: true});
+	     Backbone.history.start({pushState: true});
            },
            initialize: function(){
               console.log('--- initialiize ---');
