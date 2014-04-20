@@ -11,7 +11,8 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
            'others': 'other_demo',
            'year/:y': 'year_diary',
            'cardui_3': 'cardui_demo',
-           'masonry': 'masonry'
+           'masonry': 'masonry',
+            'diary_per_day/uploads/:id': 'diary_per_day'
            //'*path': 'notFound'
   },
   file: function(path){
@@ -49,6 +50,10 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //alert(this.DemoDiary.authorCount());
     //$('.row.demo').append(DemoDiaryListView.el);   
   },
+  diary_per_day: function(id){
+    var DiaryPerDayView = new app.DiaryPerDayView({collection: this.DemoDiary}, {id: id});
+    this.DemoDiary.fetch({reset: true});
+  },
   masonry: function(){
     $('#diary_num').hide();
     var DiaryMansonryView = new app.DiaryMasonryView({collection: this.MasonryDiary});
@@ -63,10 +68,10 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   },
   contact: function(){
     $('#diary_num').hide();
-    var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
+    /*var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
     this.DemoDiary.fetch({reset: true});
     $('.row.demo').append(ContactDiaryListView.el);
-    //$('.photowall').photoWall({speed: 500});
+    $('.photowall').photoWall({speed: 500});*/
   },
   other_demo: function(){
     alert('other demos!');

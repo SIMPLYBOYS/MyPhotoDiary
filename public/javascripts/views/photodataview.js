@@ -3,7 +3,7 @@ var app = app || {},
 
 app.PhotoDataView = Backbone.View.extend({
    tagName: 'div',
-   className: 'visible-lg',
+   //className: 'visible-lg',
    events: {
      'click .btn-primary':'updateDiary',
      'click .btn-danger':'checkDiary',

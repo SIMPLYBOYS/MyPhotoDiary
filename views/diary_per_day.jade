@@ -1,0 +1,54 @@
+
+extends layout
+block append content
+  .container
+   br
+   .row.featurette 
+   
+   #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') x 
+            h4.modal-title Delete this PhotoDiary
+          .modal-body
+            | Please make sure if you really want to remove this PhotoDiary.
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+            button.btn.btn-success(type='button') Save changes
+    if(!color_window) 
+      | Aaron Check
+      include includes/footer
+    else
+      // Java script libraries
+      script(src="https://code.jquery.com/jquery-1.10.2.min.js")
+      script(src="/javascripts/libs/bootstrap.min.js")
+      script(src="/javascripts/libs/holder.js")
+      script(src="/javascripts/libs/masonry.pkgd.js")
+      script(src="/javascripts/libs/imagesloaded.pkgd.js")
+      script(src="/javascripts/libs/jquery.infinitescroll.js")
+      script(src="/javascripts/libs/jquery.scrollUp.js")
+      script(src="/javascripts/libs/jquery.colorbox.js")
+      script(src="/javascripts/libs/underscore-min.js")
+      script(src="/javascripts/libs/backbone-min.js")
+
+      // Models/Collections
+      script(src="/javascripts/models/photo.js")
+      script(src="/javascripts/collections/diary.js")
+      script(src="/javascripts/collections/masonry_diary.js") 
+  
+      // Views
+      script(src="/javascripts/views/photoview.js")
+      script(src="/javascripts/views/photodetailview.js")
+      script(src="/javascripts/views/photodataview.js")
+      script(src="/javascripts/views/photolistview.js")
+      
+      // diary part of view
+      script(src="/javascripts/views/diaryperdayview.js")
+
+      // Router/app
+      script(src="/javascripts/router.js")
+      script(src="/javascripts/app.js")  
+      
+    
+

@@ -82,8 +82,8 @@ app.DiaryCardView = Backbone.View.extend({
   addAll: function(){
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
-    /*$('.iframe').colorbox({iframe:true, width:'90%', height:'90%', rel:'iframe'});
-    $('.group1').colorbox({rel:'gruop1', speed:500, slideshow: false, slideshowSpeed: 4000, width:'80%', height:'80%'});*/
+    $('.iframe').colorbox({iframe:true, width:'80%', height:'80%', rel:'iframe', speed:250});
+    /*$('.group1').colorbox({rel:'gruop1', speed:500, slideshow: false, slideshowSpeed: 4000, width:'80%', height:'80%'});*/
     var $container = $('#container').masonry();
     //yearItems.forEach(this.addOne, this);
     
@@ -93,7 +93,7 @@ app.DiaryCardView = Backbone.View.extend({
       $('#container').animate({ opacity:1 });
       $('#container').masonry({
         itemSelector: ".card",
-        columnWidth: 25,
+        columnWidth: 15,
         isFitWidth: true,
         isAnimated: true,
         animate: true
@@ -108,7 +108,7 @@ app.DiaryCardView = Backbone.View.extend({
   },
   appendView: function(collection, response){
      var $container = $('#container').masonry({itemSelect: '.card .demobox',
-          columnWidth: 25,
+          columnWidth: 15,
           isAnimated: true,
           isFitWidth: true,
           animate: true
@@ -124,6 +124,8 @@ app.DiaryCardView = Backbone.View.extend({
      //console.log(listconfig);
        return new app.Photo(listconfig);
      });
+     //$('.card-image').colorbox({iframe:true, width:'80%', height:'80%', rel:'card-image', speed:250});
+      $('.iframe').colorbox({iframe:true, width:'80%', height:'80%', rel:'iframe', speed:250});
      //alert(JSON.stringify(response));
      appendlist.forEach(this.appendOne, this);
      //$(elems).animate({ opacity:0 });

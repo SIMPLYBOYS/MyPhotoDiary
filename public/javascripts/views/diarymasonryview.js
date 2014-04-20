@@ -72,6 +72,7 @@ app.DiaryMasonryView = Backbone.View.extend({
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
     var $container = $('#container').masonry();
+    $('.group_masonry').colorbox({slideshow: true,iframe:true, width:'50%', height:'90%', rel:'group_masonry'});
     
     //----------------------------------------------------
     /*$container.imagesLoaded(function(){
@@ -155,7 +156,9 @@ app.DiaryMasonryView = Backbone.View.extend({
    $container.masonry('on', 'layoutComplete', function(msnyInstance, laidOutItems){ 
     //console.log('length of laidOutItems: ' + laidOutItems.length); 
     //msnyInstance.hide();
-   })
+   });
+   
+   $('.group_masonry').colorbox({slideshow: true,iframe:true, width:'50%', height:'90%', rel:'group_masonry'});
 
    appendlist = _.map(response, function(listconfig){
      //console.log(listconfig);

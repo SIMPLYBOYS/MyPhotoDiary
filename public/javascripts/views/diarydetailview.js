@@ -6,7 +6,6 @@ var app = app || {},
     yearPage,
     monthPage;
     
-
 app.DiaryDetailView = Backbone.View.extend({
    tagName: 'div',
    className: 'row featurette',
@@ -38,7 +37,6 @@ app.DiaryDetailView = Backbone.View.extend({
     detail_dom[0].append(photoDataView.render().el);
     detail_dom[1].append(photoDetailView.render().el);
     this.initdom(); 
-    //console.log(detail_dom);
     diaries_dom.push(detail_dom);
     /*$('.photodetail').append(photoDetailView.render().el);
     $('.datadetail').append(photoDataView.render().el);*/
@@ -64,7 +62,7 @@ app.DiaryDetailView = Backbone.View.extend({
         //console.log('num of diares in 2013: ' + num_2013);
         $('.badge').html(num_2013);
         year_group.forEach(this.addOne, this);
-        for(var i=0;i<num_2013;i++){
+        for(var i=1;i<=num_2013;i++){
           $('.featurette').append(diaries_dom[i]);
         }
         //console.log(diaries_dom);

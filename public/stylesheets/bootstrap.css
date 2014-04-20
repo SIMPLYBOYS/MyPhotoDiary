@@ -5295,8 +5295,8 @@ a.list-group-item.active > .badge,
 .banner {
   height:50px;
   width:50px; 
-  top:20px;
-  left:207px;
+  top:1px;
+  left:250px;
   background-position:top right;
   background-repeat:no-repeat;
   background-image:url('../img/new.png');

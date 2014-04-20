@@ -54,6 +54,9 @@ app.get('/about', function(req, res){
 app.get('/demo', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary Demom'})
 });
+app.get('/diary_per_day/uploads/:id', function(req, res){
+  res.render('diary_per_day.jade', {title: 'Diary Per Day', color_window: true});
+});
 app.get('/cardui', function(req, res){
   res.render('cardui.jade', {title: 'Badic CardUI Demo'});
 });
