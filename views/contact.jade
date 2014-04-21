@@ -1,0 +1,42 @@
+extends layout
+block append content
+  include includes/navar
+  br
+  br
+  br
+  br
+  .container
+   .row.row-offcanvas.row-offcanvas-right  
+     #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+       .list-group
+         a.list-group-item.active(href='/demo') DiaryCardList
+         a.list-group-item(href='/year/2014') My 2014 Diares
+         a.list-group-item(href='/year/2013') My 2013 Diaries
+     .col-xs-12.col-sm-9
+      .jumbotron
+       br
+       br
+       h1 Hi, Welcome to MyPhotoDiary ! 
+       p 
+        | Here is a good place for you and friends to share diary each other.
+       p
+         a.btn.btn-primary.btn-lg Learn more
+     // 
+      #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+       .list-group
+         a.list-group-item.active(href='/demo') DiaryCardList 
+         a.list-group-item(href='/year/2014') My 2014 Diares
+         a.list-group-item(href='/year/2013') My 2013 Diaries
+
+    
+
+  //
+    #gallery(style='width: 1490px;')
+     #gal
+      img.img-thumbnail(src='http://54.200.206.84/uploads/1389354651521.png', alt='Title', title='title', data-desc='some', data-category='image', data-fullsrc='http://54.200.206.84/uploads/1389354651521.png')
+      img.img-thumbnail(src='http://54.200.206.84/uploads/1389521071898.png', alt='Title', title='title', data-desc='some', data-category='image', data-fullsrc='http://54.200.206.84/uploads/1389521071898.png')
+   include includes/footer
+
+
+
+

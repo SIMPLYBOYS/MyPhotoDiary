@@ -1,0 +1,67 @@
+extends layout
+block append content
+  include includes/navar
+  br
+  br
+  br
+  br
+  .container
+   br
+   .row.featurette 
+    .col-xs-4.col-md-5.col-sm-5.col-lg-4
+     form.detail(role='form')
+       .form-group
+        label Year:
+        input#exampleInputEmail1.form-control(placeholder='2014', disabled='disabled')
+       
+        label Month:
+        input#exampleInputPassword1.form-control(placeholder='1')
+       
+        label Day:
+        input#exampleInputPassword1.form-control(placeholder='2')
+       
+        label Note:
+        textarea.form-control(rows='3') The Beautiful Christmas Tree 
+        br 
+        .caption        
+         button.btn.btn-primary(type='button') Update
+         &nbsp
+         button.btn.btn-default(type='button') Delete
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br
+        br 
+     form.detail(role='form') 
+       .form-group
+         label Year:
+         input#exampleInputEmail1.form-control(placeholder='2014', disabled='disabled')
+         label Month:
+         input#exampleInputPassword1.form-control(placeholder='1')
+         label Day:
+         input#exampleInputPassword1.form-control(placeholder='2')
+         label Note:
+         textarea.form-control(rows='3') The Beautiful Night  
+    .col-xs-8.col-md-7.col-sm-7.col-lg-8
+        img.featurette-image.img-responsive(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/1387888396784.png', alt='Generic placeholder image')
+        br
+        br
+        br
+        img.featurette-image.img-responsive(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/1387887371346.png', alt='Generic placeholder image')
+     
+    
+
+
+      
+    
+

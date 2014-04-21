@@ -1,0 +1,34 @@
+//
+ from other
+extends layout
+block append content
+  include includes/navar
+  br
+  br
+  br
+  br
+  .container
+   br
+   .row.featurette 
+   #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') x 
+            h4.modal-title Delete this PhotoDiary
+          .modal-body
+            | Please make sure if you really want to remove this PhotoDiary.
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+            button.btn.btn-success(type='button') Save changes
+        //
+           /.modal-content
+      //
+         /.modal-dialog
+    //
+       /.modal
+  
+   include includes/footer
+      
+    
+

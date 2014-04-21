@@ -1,0 +1,66 @@
+#myCarousel.carousel.hidden-xs.hidden-md.hidden-sm.slide(data-ride='carousel')
+    //
+         Indicators 
+      ol.carousel-indicators
+        li.active(data-target='#myCarousel', data-slide-to='0')
+        li(data-target='#myCarousel', data-slide-to='1')
+        li(data-target='#myCarousel', data-slide-to='2')
+        li(data-target='#myCarousel', data-slide-to='3')
+        li(data-target='#myCarousel', data-slide-to='4')
+      .carousel-inner
+        .item.active
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-1.png', alt='First slide')
+          .container
+            .carousel-caption
+             h1 My PhotoDiary
+              p 
+               | Take a Photo at the greatest moment each day life by your cellphone
+               br
+               | Support Android & iOS
+              p
+               a.btn.btn-lg.btn-primary(href='#', role='button') Sign up today 
+             // 
+              p
+                | Note: If you're viewing this page via a 
+                code file://
+                |  URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.
+              p
+                a.btn.btn-lg.btn-primary(href='#', role='button') Sign up today
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-2.png', alt='Second slide')
+          .container
+            .carousel-caption
+              h1 Another example headline.
+              p
+                | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              p
+                a.btn.btn-lg.btn-primary(href='#', role='button') Learn more
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-3.png', alt='Third slide')
+          .container
+            .carousel-caption
+              h1 One more for good measure.
+              p
+                | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              p
+                a.btn.btn-lg.btn-primary(href='/demo', role='button') Browse gallery
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-4.png', alt='Fourth slide')
+          .container
+            .carousel-caption
+             h1 Testing Carousel
+
+        .item
+          img(src='https://s3-ap-southeast-1.amazonaws.com/aaronchou/carousel/carousel-5.png', alt='Fifth slide')
+          .container
+             .carousel-caption
+             h1 Testing Carousel
+         
+
+      a.left.carousel-control(href='#myCarousel', data-slide='prev')
+        span.glyphicon.glyphicon-chevron-left
+      a.right.carousel-control(href='#myCarousel', data-slide='next')
+        span.glyphicon.glyphicon-chevron-right
+    //
+       /.carousel 
+
