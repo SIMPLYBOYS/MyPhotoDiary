@@ -1,9 +1,9 @@
 var app = app || {};
 
 app.PhotoCardView = Backbone.View.extend({
-   className: 'card',
+   className: 'card card-image',
 
-   template: _.template('<% if (typeof(date)==="undefined") { %><a class="iframe" href="/diary_per_day<%= picPath %>" <% } %> <div class="card-image fade-in"><img alt=<%= author %> src=<%= picPath %> > <% if(title!=="") {%><div class=banner></div><h5><%= title%></h5><%}%></div></a><div class=info_wrapper> <% if(message!=="") {%> <p><%= message %></p> <%}%> <a class="info_box" id="time-stamp"><%=year %>-<%= month %>-<%= day %></a><a class="info_box pull-right"><span class="glyphicon glyphicon-thumbs-up" style="top: -3px;"></span></a></div>'),
+   template: _.template('<% if (typeof(date)==="undefined") { %><a class="iframe" href="/diary_per_day<%= picPath %>" <% } %> <div class="card-image fade-in"><img alt=<%= author %> src=<%= picPath %> > <% if(title!=="") {%><div class=banner></div><h5><%= title%></h5><%}%></div></a><div class=info_wrapper> <% if(message!=="") {%> <p><%= message %></p> <%}%> <div class="info_box pull-left" id="time-stamp"><%=year %>-<%= month %>-<%= day %></div> <a class="info_box pull-right"><span class="fa fa-github-square" style="top: -3px;"></span> <span class="fa fa-facebook-square" style="top: -3px;"></span> <span class="fa fa-google-plus-square" style="top: -3px;"></a></span></div>'),
 
    render: function(){
      //var html = '<h3>' + this.model.get('author') + '</h3>';
