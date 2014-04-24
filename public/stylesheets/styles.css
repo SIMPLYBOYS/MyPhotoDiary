@@ -116,6 +116,29 @@ body {
    width: 300px;
    padding: 0;
    border-radius: 0;
+   -webkit-transition: scale(1, 1);
+   -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1,1);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+}
+
+.card img:hover{
+  -webkit-transform: scale(1.05, 1.07);
+  -webkit-transform: scale(1.05,1.07);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1.05,1.07);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+    position: relative;
+    z-index: 99;
+}
+
+.test{
+   display: block;
+   transform:scale(1.5,1.5);
 }
 
 .card h1,
@@ -178,7 +201,7 @@ body {
 .card-image h5, 
 .card-image h6 {
     position:absolute;
-    bottom:70px;
+    bottom:76px;
     width:100%;
     color:white;
     background:rgba(0,0,0,0.35);
@@ -258,12 +281,25 @@ body {
   width: 300px;
   padding: 1px;
   border-radius: 3px;
+  -webkit-transition: scale(1, 1);
+   -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1,1);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
 }
 
-.picbox :hover{
-  -webkit-transform: scale(1.25);
-  -moz-transform: scale(1.25);
+.picbox img:hover{
+  -webkit-transform: scale(1.05,1.07);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 250ms;
+    -moz-transform: scale(1.05,1.07);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 250ms;
+    position: relative;
+    z-index: 99;
 }
+
 
 .info_wrapper{
   /*background: #f0eaea;*/
