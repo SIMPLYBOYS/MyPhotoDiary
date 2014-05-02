@@ -1,20 +1,23 @@
 var app = app || {},
     diaries_dom = [],
     detail_dom = [],
-    Diarypath = "";
+    Diarypath = "",
+    S3_state ="";
     
 app.DiaryPerDayView = Backbone.View.extend({
    tagName: 'div',
    className: 'row featurette',
   //el: '.col-xs-6.col-md-5.col-sm-5.col-lg-4',
  
-  initialize: function(diary, path){
+  initialize: function(diary, path, s3){
     Diarypath = path; 
+    S3_state = s3.state;
     //alert('init: ' + JSON.stringify(Diarypath));
     console.log('-------->' + Diarypath.id);
+    console.log('state:' + s3.state);
     this.initdom();
     this.listenTo(this.collection, 'reset', this.addAll);
-    this.listenTo(this.collection, 'all', this.addAll)
+    this.listenTo(this.collection, 'all', this.addAll);
     //this.collection.fetch({reset: true});
   },
   initdom: function(){
@@ -39,10 +42,14 @@ app.DiaryPerDayView = Backbone.View.extend({
     this.$el.empty();
     $('.photodetail').empty();
     $('.datadetail').empty();
-    var diary_group = this.collection.where({picPath: '/uploads/' + Diarypath.id});
-    diary_group.forEach(this.addOne, this);
-    console.log('diary_group: ' + JSON.stringify(diary_group));
+    console.log('s3 state: ' + S3_state);
+    if (S3_state === "false")
+      var diary_group = this.collection.where({picPath: '/uploads/' + Diarypath.id});
+    else
+      var diary_group = this.collection.where({picPath: 'https://s3-ap-northeast-1.amazonaws.com/photodiary/' + Diarypath.id});
     
+    diary_group.forEach(this.addOne, this);
+    console.log('diary_group: ' + JSON.stringify(diary_group)); 
     $('.featurette').append(diaries_dom[1]);
     //alert('test diary per day length: ' + diary_group.length);
   }

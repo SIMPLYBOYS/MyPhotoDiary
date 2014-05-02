@@ -12,7 +12,7 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
            'year/:y': 'year_diary',
            'cardui_3': 'cardui_demo',
            'masonry': 'masonry',
-            'diary_per_day/uploads/:id': 'diary_per_day'
+           'diary_per_day/uploads/:id/s3/:state': 'diary_per_day'
            //'*path': 'notFound'
   },
   file: function(path){
@@ -50,8 +50,8 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
     //alert(this.DemoDiary.authorCount());
     //$('.row.demo').append(DemoDiaryListView.el);   
   },
-  diary_per_day: function(id){
-    var DiaryPerDayView = new app.DiaryPerDayView({collection: this.DemoDiary}, {id: id});
+  diary_per_day: function(id, state){
+    var DiaryPerDayView = new app.DiaryPerDayView({collection: this.DemoDiary}, {id: id}, {state: state});
     this.DemoDiary.fetch({reset: true});
   },
   masonry: function(){
@@ -68,10 +68,25 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   },
   contact: function(){
     $('#diary_num').hide();
-    /*var ContatDiaryListView = new app.DiaryWallView({collection: this.DemoDiary});
-    this.DemoDiary.fetch({reset: true});
-    $('.row.demo').append(ContactDiaryListView.el);
-    $('.photowall').photoWall({speed: 500});*/
+    var $elem = $('.btn-primary');
+    document.documentElement.requestFullscreen =
+            document.documentElement.requestFullscreen ||
+            document.documentElement.mozRequestFullScreen ||
+            document.documentElement.webkitRequestFullscreen;
+   
+    document.cancelFullScreen =
+            document.cancelFullScreen ||
+            document.mozCancelFullScreen ||
+            document.webkitCancelFullScreen;
+
+    fullscreen = function(){
+       if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement) {
+         document.documentElement.requestFullscreen();
+       } else {
+         document.cancelFullScreen();
+       }
+    };
+    $elem.on('click', fullscreen);
   },
   other_demo: function(){
     alert('other demos!');

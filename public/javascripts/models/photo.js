@@ -9,7 +9,8 @@ app.Photo = Backbone.Model.extend({
          year: '',
          month: '',
          day: '',
-         title: ''
+         title: '',
+         s3: ''
        },
        urlRoot: '/api/diaries',
        idAttribute: '_id'

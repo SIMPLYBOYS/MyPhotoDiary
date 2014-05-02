@@ -6,6 +6,7 @@
 var express = require('express'),
     routes = require('./routes'),
     user = require('./routes/user'),
+    knox = require('knox'),
     http = require('http'),
       fs = require('fs'),
   mongoose = require('mongoose'),
@@ -14,6 +15,12 @@ var express = require('express'),
 mongoose.connect('mongodb://localhost/diary_database');
 
 var app = express();
+
+var client = knox.createClient({
+    key: 'AKIAIJXFN4HRT2KKNDKA'
+  , secret: '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'
+  , bucket: 'photodiary'
+});
 
 //Schemas
 var Diary = new mongoose.Schema({
@@ -24,7 +31,8 @@ var Diary = new mongoose.Schema({
     picPath: String, 
     year: String,
     month: String,
-    day: String  
+    day: String,
+    s3: Boolean
 });
 
 var DiaryModel = mongoose.model('Diary', Diary);
@@ -54,7 +62,7 @@ app.get('/about', function(req, res){
 app.get('/demo', function(req, res){
   res.render('demo.jade', {title: 'PhotoDiary Demom'})
 });
-app.get('/diary_per_day/uploads/:id', function(req, res){
+app.get('/diary_per_day/uploads/:id/s3/:state', function(req, res){
   res.render('diary_per_day.jade', {title: 'Diary Per Day', color_window: true});
 });
 app.get('/cardui', function(req, res){
@@ -70,6 +78,7 @@ app.get('/masonry', function(req, res){
   res.render('masonry.jade', {title: 'RealWorld CardUI Demo'});
 });
 app.get('/year/:y', function(req, res){
+  console.log('checking per year view');
   res.render('demo.jade', {title: 'PhotoDiary per Year'})
 });
 app.get('/others/:id', function(req, res){
@@ -83,10 +92,61 @@ app.get('/images', function(req, res){
   console.log('images info get request!\n');
   res.end();
 });
+app.get('/s3put', function(req, res){ 
+  fs.stat('./public/uploads/1398482477389.png', function(err, stat){
+    var s3req = client.put('/1398482477389.png', { 
+        'x-amz-acl': 'public-read',
+        'Content-Length': stat.size,
+        'Content-Type': 'png/picture'
+    });
+    fs.createReadStream('./public/uploads/1398482477389.png').pipe(s3req);
+    s3req.on('response', function(s3res){
+      console.log('get response:' + s3res.statusCode);
+      if(s3res.statusCode === 200){
+         console.log('===== s3 upload success =====\n\n');
+	 s3req.end('s3 upload finish');
+         res.redirect('/');
+      }
+    });	
+  });
+  console.log('s3put!!\n');
+});
+
+app.get('/s3list', function(){
+  client.list({prefix: ''}, function(err, data){
+   console.log('======= s3 bucket list ======' + JSON.stringify(data));
+  });
+});
+
+app.get('/s3get', function(req, res){
+  console.log('--- s3 get process ---'); 
+  client.getFile('1398507125885.png', function(err, s3res){
+    console.log(res.statusCode);
+    console.log(res.header);
+    if(res.statusCode === 200)
+      res.redirect('/'); 
+    else
+      res.end();
+  });
+});
+
+app.get('/s3del', function(req, res){
+  console.log('--- s3 del process ---');
+  client.deleteFile('1398507125885.png', function(err, s3res){
+    console.log('response code: ' + res.statusCode);
+    console.log(res.headers);
+    if(res.statusCode === 200)
+      res.redirect('/');
+    else
+      res.end();
+  });
+});
+
 app.post('/images', function(req, res){
   console.log('images upload function is constructing!\n');
   //console.log(req.body.image);
   //console.log(req.body.fileName);
+  // ./public/uploads/1398507125885.png
   var base64Data = req.body.image,
         fileName = req.body.fileName + '.png',
          tmpPath = req.body.path + '/' + fileName,
@@ -102,13 +162,16 @@ app.post('/images', function(req, res){
               author: 'aaron',
              message: '',
              releaseDate: picDate,
-             picPath: '/uploads/' + fileName,
+             //picPath: '/uploads/' + fileName, 
+             picPath: 'https://s3-ap-northeast-1.amazonaws.com/photodiary/' + fileName,
                 year: year,
                month: month,
-                 day: day
+                 day: day,
+                  s3: true // must be true to indicate the photo has been push to s3
           });
       //binaryData = new Buffer(base64Data, 'base64').toString('binary');
   console.log('-------saved to database -------\n\n');
+  console.log('=== temp path:%s ===', tmpPath);
   diary.save(function(err){
     if(!err){
       console.log('created!')
@@ -122,14 +185,33 @@ app.post('/images', function(req, res){
   fs.writeFile(fileName, binaryData, 'binary', function(err, written, buffer){
     console.log(err);
     if(!err){
-      fs.rename(tmpPath, targetPath, function(err){
+      /*fs.rename(tmpPath, targetPath, function(err){
         if(err) throw err;
         fs.unlink(tmpPath, function(){
          if (err) throw err;
          console.log('----- finished upload ----\n\n');
          //TODO DB save operation
         })
-      });
+      });*/
+      fs.stat(tmpPath, function(err, stat){
+    	  var s3req = client.put('/' + fileName, {
+            'x-amz-acl': 'public-read',
+            'Content-Length': stat.size,
+            'Content-Type': 'png/picture'
+    	  });
+    	  fs.createReadStream(tmpPath).pipe(s3req);
+    	  s3req.on('response', function(s3res){
+      	    console.log('get response:' + s3res.statusCode);
+      	    if(s3res.statusCode === 200){
+              console.log('===== s3 upload success =====\n\n');
+              s3req.end('s3 upload finish');
+            }
+            fs.unlink(tmpPath, function(){
+              if(err) throw err;
+              console.log('----finally remove tmpPath file ----');
+            });
+    	  });
+     }); 
     } else {
         throw err;
     }  
@@ -188,11 +270,33 @@ app.put('/api/diaries/:id', function(req, res){
 app.delete('/api/diaries/:id', function(req, res){
   console.log('Delete Diary: ' + req.params.id);
   return DiaryModel.findById(req.params.id, function(err, pic){
+   console.log('--- delete file: ' + pic + '---');
    return pic.remove(function(err){
      if(!err){
-       console.log('a Picture of Diary has been removed!');
+       console.log('a Picture of Diary has been removed from db!');
+       if(pic.picPath.split('/')[0] !== 'https:'){
+         console.log('--- delete file: ' + pic + '---');
+         var filePath = './public/uploads/' + pic.picPath.split('/')[2]; //TODO verify file location in uploads or s3
+         fs.unlink(filePath, function(){
+           if(err) throw err;
+           console.log('delete file from local filesystem: ' + filePath);
+         });
+         res.end();
+       } else {
+         console.log('--- delete s3 file ---');
+         var filePath = pic.picPath.split('/')[4];
+         client.deleteFile(filePath, function(err, s3res){
+           console.log('response code: ' + res.statusCode);
+           console.log(res.headers);
+           if(res.statusCode === 200)
+             res.redirect('/');
+           else
+             res.end();
+         }); 
+       }
      } else {
        console.log(err);
+       res.end();
      }
    });
   });
