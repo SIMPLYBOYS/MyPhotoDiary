@@ -72,7 +72,7 @@ app.DiaryMasonryView = Backbone.View.extend({
     this.$el.empty();
     this.collection.forEach(this.addOne, this);
     var $container = $('#container').masonry();
-    $('.group_masonry').colorbox({slideshow: true,iframe:true, width:'50%', height:'90%', rel:'group_masonry'});
+    $('.group_masonry').colorbox({slideshow: true, slideshowAuto: false, photo:true, width:'50%', height:'90%', rel:'group_masonry'});
     
     //----------------------------------------------------
     /*$container.imagesLoaded(function(){
@@ -139,7 +139,8 @@ app.DiaryMasonryView = Backbone.View.extend({
     },500);*/
   },
   checkEnd: function(){
-    this.notify('Reach the End of MasonryPage!');
+    //this.notify('Reach the End of MasonryPage!');
+    $.notify('Reach the End of MasonryPage!', {style: 'bootstrap', className: 'success'});
   },
   appendView: function(collection, response){
    //alert(JSON.stringify(response[0]));
@@ -158,7 +159,7 @@ app.DiaryMasonryView = Backbone.View.extend({
     //msnyInstance.hide();
    });
    
-   $('.group_masonry').colorbox({slideshow: true,iframe:true, width:'50%', height:'90%', rel:'group_masonry'});
+   $('.group_masonry').colorbox({slideshow: true, slideshowAuto: false, photo:true, width:'50%', height:'90%', rel:'group_masonry'});
 
    appendlist = _.map(response, function(listconfig){
      //console.log(listconfig);
@@ -172,7 +173,8 @@ app.DiaryMasonryView = Backbone.View.extend({
    $container.append(elems).masonry('appended', elems); 
    elems.splice(0,elems.length); 
    if(response.length > 0){
-     this.notify('Have Next Page!');
+     //this.notify('Have Next Page!');
+     $.notify('Have Next Page!', {style: 'bootstrap', className: 'warn'});
    } else {
       this.checkEnd();
    }
