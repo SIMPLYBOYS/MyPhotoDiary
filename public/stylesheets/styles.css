@@ -18,6 +18,7 @@ body {
 
 #container {
  margin: 0 auto;
+ background:#eee;
 }
 
 #notification {
@@ -183,8 +184,8 @@ body {
   -moz-transform: scale(1.25);
 }
 
-.card-image .banner {
-    height:45px;
+.card-image .mybanner {
+    height:49px;
     width:93px;
     top:0px;
     right:0px;
@@ -300,6 +301,10 @@ body {
     z-index: 99;
 }
 
+.s3{
+ text-align: center;
+ background: #ff9933;
+}
 
 .info_wrapper{
   /*background: #f0eaea;*/
@@ -371,3 +376,5 @@ body {
   -moz-animation-delay:0.7s;
   animation-delay: 0.7s;
 }
+
+
