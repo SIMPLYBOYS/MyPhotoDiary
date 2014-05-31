@@ -10,7 +10,7 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
            'contact': 'contact',
            'others': 'other_demo',
            'year/:y': 'year_diary',
-           'cardui_3': 'cardui_demo',
+           'diary_card': 'cardui_demo',
            'masonry': 'masonry',
            'diary_per_day/uploads/:id/s3/:state': 'diary_per_day'
            //'*path': 'notFound'
@@ -52,13 +52,13 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   },
   diary_per_day: function(id, state){
     var DiaryPerDayView = new app.DiaryPerDayView({collection: this.DemoDiary}, {id: id}, {state: state});
-    this.DemoDiary.fetch({reset: true});
+    this.DemoDiary.fetch({reset: true});   
   },
   masonry: function(){
     $('#diary_num').hide();
     var DiaryMansonryView = new app.DiaryMasonryView({collection: this.MasonryDiary});
   },
-  cardui_demo: function(){
+  cardui_demo: function(){ 
     $('#diary_num').hide();
     var DemoDiaryCardView = new app.DiaryCardView({collection: this.MasonryDiary});
     //var DemoDiaryCardView = new app.DiaryCardView({collection: this.MasonryDiary}); 
@@ -68,7 +68,9 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
   },
   contact: function(){
     $('#diary_num').hide();
-    var $elem = $('.btn-primary');
+    var $elem = $('.btn-primary'),
+        $notify = $('.btn-success');
+
     document.documentElement.requestFullscreen =
             document.documentElement.requestFullscreen ||
             document.documentElement.mozRequestFullScreen ||
@@ -87,6 +89,39 @@ var PhotoDiaryApp = new (Backbone.Router.extend({
        }
     };
     $elem.on('click', fullscreen);
+    $.notify.defaults({
+      // whether to hide the notification on click
+        clickToHide: true,
+       // whether to auto-hide the notification
+         autoHide: true,
+       // if autoHide, hide after milliseconds
+         autoHideDelay: 2600,
+       // show the arrow pointing at the elemen 
+         arrowShow: true,
+       // arrow size in pixels
+         arrowSize: 5,   
+      // default positions
+         elementPosition: 'bottom left',
+         globalPosition: 'top right',
+      // default style
+         style: 'bootstrap',
+      // default class (string or [string])
+         className: 'error',
+      // show animation
+         showAnimation: 'slideDown',
+      // show animation duration
+         showDuration: 400,
+      // hide animation
+         hideAnimation: 'slideUp',
+      // hide animation duration
+         hideDuration: 200,
+      // padding between element and notification
+         gap: 2
+    });
+
+    $notify.on('click',function(){
+      $(this).notify("check notify", {position: "buttom"});
+    });
   },
   other_demo: function(){
     alert('other demos!');
